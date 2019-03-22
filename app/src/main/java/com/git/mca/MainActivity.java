@@ -22,8 +22,9 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getName();
+    int requestCode = 1;
 
-    CharSequence[] items = {"Android", "iOS", "Windows"};
+    CharSequence[] items = {"SMS", "Email", "Notifications"};
     boolean[] itemsChecked = new boolean [items.length];
 
     private ProgressDialog progressDialog;
@@ -94,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
             case 0:
                 return new AlertDialog.Builder(this)
                         .setIcon(android.R.drawable.ic_dialog_info)
-                        .setTitle("This is a sample dialog...")
+                        .setTitle("I agree to receive...")
                         .setPositiveButton("OK", new
                                 DialogInterface.OnClickListener() {
                                     @Override
@@ -149,6 +150,15 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return null;
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == this.requestCode) {
+            if (resultCode == RESULT_OK) {
+                Toast.makeText(this, data.getData().toString(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override
