@@ -2,14 +2,21 @@ package com.git.mca;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -26,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
 
     CharSequence[] items = {"SMS", "Email", "Notifications"};
     boolean[] itemsChecked = new boolean [items.length];
+
+    private String CHANNEL_ID = "com.git.mca";
+    private int notificationID = 1;
 
     private ProgressDialog progressDialog;
     private int progress = 0;
@@ -84,7 +94,20 @@ public class MainActivity extends AppCompatActivity {
         activityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent("com.git.mca.activity2"));
+                Intent intent = new Intent("com.git.mca.activity2");
+                Bundle extras = new Bundle();
+                extras.putString("NameHint", "Any text you want here");
+                intent.putExtras(extras);
+                startActivityForResult(intent, requestCode);
+            }
+        });
+
+        createNotificationChannel();
+        Button notificationButton = findViewById(R.id.notificationButton);
+        notificationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayNotification();
             }
         });
     }
@@ -161,6 +184,24 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    protected void displayNotification() {
+        Intent intent = new Intent(this, NotificationView.class);
+        intent.putExtra("notificationID", 1);
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(android.R.drawable.ic_menu_my_calendar)
+                .setContentTitle("My notification")
+                .setContentText("Meeting starts in 5 minutes")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
+
+        NotificationManagerCompat nm = NotificationManagerCompat.from(this);
+        nm.notify(notificationID, builder.build());
+    }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -211,5 +252,21 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 }
