@@ -18,6 +18,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -94,11 +95,13 @@ public class MainActivity extends AppCompatActivity {
         activityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent("com.git.mca.activity2");
-                Bundle extras = new Bundle();
-                extras.putString("NameHint", "Any text you want here");
-                intent.putExtras(extras);
-                startActivityForResult(intent, requestCode);
+//                Intent intent = new Intent("com.git.mca.activity2");
+//                Bundle extras = new Bundle();
+//                extras.putString("NameHint", "Any text you want here");
+//                intent.putExtras(extras);
+//                startActivityForResult(intent, requestCode);
+                Intent intent = new Intent(getBaseContext(), RecyclerActivity.class);
+                startActivity(intent);
             }
         });
 

@@ -39,6 +39,11 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".RecyclerActivity"
+            android:label="RecyclerView Example">
+        </activity>
     </application>
 
 </manifest>
