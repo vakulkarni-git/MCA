@@ -21,7 +21,8 @@
         </activity>
 
         <activity
-            android:name=".Activity2">
+            android:name=".Activity2"
+            android:label="Intents activity">
             <intent-filter>
                 <action android:name="com.git.mca.activity2" />
 
@@ -33,7 +34,7 @@
             android:name=".NotificationView"
             android:label="Details of notification">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="com.git.mca.activity2"/>
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

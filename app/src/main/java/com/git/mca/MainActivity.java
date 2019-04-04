@@ -188,7 +188,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, NotificationView.class);
         intent.putExtra("notificationID", 1);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,
+                0, intent, 0);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(android.R.drawable.ic_menu_my_calendar)
