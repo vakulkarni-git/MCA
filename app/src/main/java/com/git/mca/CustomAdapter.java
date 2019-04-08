@@ -5,11 +5,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> {
-    private String[] mDataset;
+    private int[] mDataset;
+    private int countCreate = 0;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -17,9 +20,12 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         // each data item is just a string in this case
         public TextView textView;
-        public MyViewHolder(TextView v) {
+        public ImageView imageView;
+
+        public MyViewHolder(FrameLayout v) {
             super(v);
-            textView = v;
+            textView = v.findViewById(R.id.text_view);
+            imageView = v.findViewById(R.id.image);
         }
 
         @Override
@@ -29,7 +35,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public CustomAdapter(String[] myDataset) {
+    public CustomAdapter(int[] myDataset) {
         mDataset = myDataset;
     }
 
@@ -37,8 +43,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     @Override
     public CustomAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
                                                          int viewType) {
+        Log.d("CreateViewHolder", "onCreateViewHolder" + countCreate);
+        countCreate++;
         // create a new view
-        TextView v = (TextView) LayoutInflater.from(parent.getContext())
+        FrameLayout v = (FrameLayout) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.recycler_item, parent, false);
 
         MyViewHolder vh = new MyViewHolder(v);
@@ -50,7 +58,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     public void onBindViewHolder(MyViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.textView.setText(mDataset[position]);
+        Log.d("CustomAdapter", "OnBindViewHolder" + position);
+        //holder.textView.setText(mDataset[position]);
+        holder.imageView.setImageResource(mDataset[position]);
+        holder.textView.setText("Flag " + position);
 
     }
 
