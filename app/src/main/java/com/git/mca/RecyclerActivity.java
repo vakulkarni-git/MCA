@@ -28,11 +28,10 @@ public class RecyclerActivity extends AppCompatActivity {
 
 
         layoutManager = new LinearLayoutManager(this);
-        ((LinearLayoutManager) layoutManager).setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(layoutManager);
 
         // specify an adapter (see also next example)
-        mAdapter = new CustomAdapter(flags);
+        mAdapter = new CustomAdapter(sorted_flags, this);
         recyclerView.setAdapter(mAdapter);
     }
 

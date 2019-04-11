@@ -9,6 +9,7 @@ import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,10 +27,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getName();
+
+    private SharedPreferences preferences;
+    private SharedPreferences.Editor editor;
+    private String preferencesName = "SETTINGS";
+
     int requestCode = 1;
 
     CharSequence[] items = {"SMS", "Email", "Notifications"};
@@ -59,6 +66,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Log.d(TAG, "onCreate()");
+
+        preferences = this.getSharedPreferences(preferencesName, MODE_PRIVATE);
+
+        TextView label = findViewById(R.id.label);
+
+        String chosenDate = preferences.getString(PickerActivity.CHOSEN_DATE, "NO_DATE");
+        String chosenTime = preferences.getString(PickerActivity.CHOSEN_TIME, "NO_TIME");
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -100,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
 //                extras.putString("NameHint", "Any text you want here");
 //                intent.putExtras(extras);
 //                startActivityForResult(intent, requestCode);
-                Intent intent = new Intent(getBaseContext(), RecyclerActivity.class);
+                Intent intent = new Intent(getBaseContext(), AsyncTaskActivity.class);
                 startActivity(intent);
             }
         });

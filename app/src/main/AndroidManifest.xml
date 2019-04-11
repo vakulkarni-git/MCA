@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.git.mca">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -43,6 +45,16 @@
         <activity
             android:name=".RecyclerActivity"
             android:label="RecyclerView Example">
+        </activity>
+
+        <activity
+            android:name=".PickerActivity"
+            android:label="PickerActivity Example">
+        </activity>
+
+        <activity
+            android:name=".AsyncTaskActivity"
+            android:label="AsyncTask Example">
         </activity>
     </application>
 
