@@ -19,6 +19,13 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="40dp"/>
 
+    <GridView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="auto_fit"
+        android:columnWidth="90dp"
+        android:stretchMode="columnWidth"
+        android:gravity="center"/>
 
     <EditText
         android:id="@+id/name"

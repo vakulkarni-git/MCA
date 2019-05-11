@@ -3,6 +3,9 @@
     package="com.git.mca">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
         android:allowBackup="true"
@@ -56,6 +59,13 @@
             android:name=".AsyncTaskActivity"
             android:label="AsyncTask Example">
         </activity>
+
+        <activity
+            android:name=".ListAndSpinnerSample"
+            android:label="ListAndSpinnerSample Example">
+        </activity>
+
+        <service android:name=".CustomService"/>
     </application>
 
 </manifest>

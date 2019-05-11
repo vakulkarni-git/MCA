@@ -1,6 +1,12 @@
 package com.git.mca;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -16,6 +22,9 @@ public class Activity2 extends AppCompatActivity {
     private int requestCode = 1;
     private EditText name;
     private String nameHint = "Enter name";
+
+    private LocationManager locationManager;
+    private LocationListener locationListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +53,45 @@ public class Activity2 extends AppCompatActivity {
         });
 
         builtInActivities();
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("TASK_COMPLETED");
+        registerReceiver(intentReceiver, intentFilter);
+    }
+
+    private BroadcastReceiver intentReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Toast.makeText(getBaseContext(), "Task Completed", Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    private class CustomLocationListener implements LocationListener {
+
+        @Override
+        public void onLocationChanged(Location location) {
+            if (location != null) {
+                Toast.makeText(getBaseContext(),
+                        "Location changed: Lat: " + location.getLatitude() +
+                        "Lng : " + location.getLongitude(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+
+        }
     }
 
     @Override
